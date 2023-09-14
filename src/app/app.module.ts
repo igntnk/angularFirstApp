@@ -4,10 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { StudentEditorComponent } from './components/student-editor/student-editor.component';
+import { TableStudentsComponent } from './components/table-students/table-students.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StudentEditorComponent,
+    TableStudentsComponent
   ],
   imports: [
     BrowserModule,
