@@ -5,7 +5,6 @@
 <mat-form-field class="full-width-input">
 
 <input matInput type="text" placeholder="Name of student"
-
 [(ngModel)]="editingStudent.name" required>
 
 </mat-form-field>
@@ -13,7 +12,6 @@
 <mat-form-field class="full-width-input">
 
 <input matInput type="text" placeholder="Surname of student"
-
 [(ngModel)]="editingStudent.surname" required>
 
 </mat-form-field>
@@ -25,7 +23,6 @@
 <button mat-raised-button (click)="onNoClick()">Cancel</button>
 
 <button class="right-align" mat-raised-button color="primary"
-
-[mat-dialog-close]="editingStudent">Add</button>
+[mat-dialog-close]="editingStudent" (click)="onAddClick()">Add</button>
 
 </div>
