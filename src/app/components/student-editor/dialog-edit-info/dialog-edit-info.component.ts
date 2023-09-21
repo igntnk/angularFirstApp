@@ -13,16 +13,21 @@ import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-w
 })
 export class DialogEditInfoComponent {
   editingStudent: Student;
+  localName: string;
+  localSurname: string;
 
   constructor(public dialogRef: MatDialogRef<DialogEditWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private baseService:BaseServiceService) {
       this.editingStudent = data;
-
+      this.localName = this.editingStudent.name;
+      this.localSurname = this.editingStudent.surname;
  }
 
   ngOnInit() {}
 
   onNoClick(): void {
+    this.editingStudent.name = this.localName;
+    this.editingStudent.surname = this.localSurname;
     this.dialogRef.close();
   }
 
