@@ -15,17 +15,26 @@
 }
 
 td{
-
+  position: relative;
   text-align: center;
   column-width: 150px;
   height: 30px;
   color:#8a9fff;
   font-weight: 600;
-  border-left:1px solid #885b5b;
 }
 
-td:first-child{
-  border-left:0px solid #ffacac;
+td::after{
+  position: absolute;
+  content: " ";
+  height: 15px;
+  left: 162px;
+  width: 0;
+  border-left: 1px solid #ffb2b2;
+  z-index: 50;
+}
+
+td:last-child::after{
+  border-left: 0px solid #ffb2b2;
 }
 
 th{
@@ -63,6 +72,37 @@ table{
   padding-bottom: 4px;
 }
 
+.centredBtn:hover{
+  background-color: #d69191;
+}
+
+.centredBtn:active{
+  background-color: #8b5b5b;
+}
+
 .centredDiv{
   text-align: center;
+}
+
+.actionBtn{
+  background-color: #ffa9a9;
+  border-radius: 10px;
+  border: 0px solid #492929;
+  color:#421818;
+  font-family: "San Francisco";
+  font-weight: 600;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  width: 70px;
+  margin: 0 10px;
+}
+
+.actionBtn:hover{
+  background-color: #d69191;
+}
+
+.actionBtn:active{
+  background-color: #8b5b5b;
 }

@@ -5,12 +5,15 @@
     <th>ID</th>
     <th>Name</th>
     <th>Surname</th>
+    <th>Action</th>
   </thead>
   <tbody>
     <tr *ngFor="let student of students">
       <td>{{student.id}}</td>
       <td>{{student.name}}</td>
       <td>{{student.surname}}</td>
+      <td><button class = "actionBtn" (click)="editStudent(student)">Edit</button>
+        <button class = "actionBtn" (click)="deleteUser(student)">Delete</button></td>
     </tr>
   </tbody>
 </table>

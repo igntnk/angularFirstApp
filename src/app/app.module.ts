@@ -14,13 +14,15 @@ import { AppComponent } from './app.component';
 import { StudentEditorComponent } from './components/student-editor/student-editor.component';
 import { TableStudentsComponent } from './components/table-students/table-students.component';
 import { DialogEditWrapperComponent } from './components/student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
+import { DialogEditInfoComponent } from './components/student-editor/dialog-edit-info/dialog-edit-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentEditorComponent,
     TableStudentsComponent,
-    DialogEditWrapperComponent
+    DialogEditWrapperComponent,
+    DialogEditInfoComponent
   ],
   imports: [
     BrowserModule,

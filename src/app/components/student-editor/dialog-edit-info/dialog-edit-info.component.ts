@@ -4,30 +4,29 @@ import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from  '@angular/material/dialog';
 import { Student } from 'src/app/modules/students';
 import { BaseServiceService } from 'src/app/service/base-service.service';
+import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
 
 @Component({
-  selector: 'app-dialog-edit-wrapper',
-  templateUrl: './dialog-edit-wrapper.component.html',
-  styleUrls: ['./dialog-edit-wrapper.component.css']
+  selector: 'app-dialog-edit-info',
+  templateUrl: './dialog-edit-info.component.html',
+  styleUrls: ['./dialog-edit-info.component.css']
 })
-
-export class DialogEditWrapperComponent{
+export class DialogEditInfoComponent {
   editingStudent: Student;
 
   constructor(public dialogRef: MatDialogRef<DialogEditWrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private baseService:BaseServiceService) {}
+    @Inject(MAT_DIALOG_DATA) public data: any, private baseService:BaseServiceService) {
+      this.editingStudent = data;
 
-  ngOnInit() {
-    this.editingStudent = new Student();
-  }
+ }
+
+  ngOnInit() {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  onAddClick(): void {
-    this.baseService.addNewStudent(this.editingStudent);
-    this.editingStudent= new Student();
+  onEditClick(){
+    this.dialogRef.close();
   }
-
 }
