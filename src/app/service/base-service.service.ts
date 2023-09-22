@@ -1,26 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Student } from 'src/app/modules/students';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseServiceService {
 
-  students: Student[] = [{id:0,name:'Danil',surname:'Svinoyhov'},
-      {id:1,name:'Ilya',surname:'Ignatenko'},
-      {id:2,name:'Danil',surname:'Kabuba'}
-    ];
+  private studentsUrl = 'api/students';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getAllStudents(): Student[] {
-    console.log('count of students' + this.students.length);
-    return this.students;
+  getAllStudents(): Observable<Student[]> {
+    return this.http.get<Student[]>(this.studentsUrl);
   }
 
-  addNewStudent(student: Student): void {
+  addNewStudent(student: Student): Observable<Student>{
     console.log('addNewStudent');
-    this.students.push(student);
+    return this.http.post<Student>(this.studentsUrl,student).pipe();
   }
 
+  deleteStudent(studentID: number): Observable<Student>{
+    console.log('delete student');
+    return this.http.delete<Student>(this.studentsUrl +"/"+ studentID).pipe();
+  }
+
+  editStudent(student: Student): Observable<Student>{
+    console.log("editing student");
+    return this.http.put<Student>(this.studentsUrl,student).pipe();
+  }
 }

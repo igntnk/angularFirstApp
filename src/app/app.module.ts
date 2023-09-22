@@ -15,6 +15,7 @@ import { StudentEditorComponent } from './components/student-editor/student-edit
 import { TableStudentsComponent } from './components/table-students/table-students.component';
 import { DialogEditWrapperComponent } from './components/student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { DialogEditInfoComponent } from './components/student-editor/dialog-edit-info/dialog-edit-info.component';
+import { MaterialTableComponent } from './components/material-table/material-table.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DialogEditInfoComponent } from './components/student-editor/dialog-edit
     StudentEditorComponent,
     TableStudentsComponent,
     DialogEditWrapperComponent,
-    DialogEditInfoComponent
+    DialogEditInfoComponent,
+    MaterialTableComponent
   ],
   imports: [
     BrowserModule,
@@ -32,15 +34,12 @@ import { DialogEditInfoComponent } from './components/student-editor/dialog-edit
     BrowserAnimationsModule,
     MatFormFieldModule,
     HttpClientModule,
-    MatInputModule
+    MatInputModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+      )
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-HttpClientInMemoryWebApiModule.forRoot(
-
-  InMemoryDataService, { dataEncapsulation: false }
-
-  )
