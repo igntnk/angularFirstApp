@@ -1,6 +1,10 @@
-<h1 mat-dialog-title>Add student</h1>
+<div>
 
-<div mat-dialog-content style="display: inline; padding: 'center'; margin: auto;">
+  <h1 align = "center" class = "headerTxt">Edit student</h1>
+
+</div>
+
+<div mat-dialog-content style="display: grid; padding: 'center'; margin: auto; justify-content: center;">
 
 <mat-form-field class="full-width-input">
 
@@ -18,11 +22,11 @@
 
 </div>
 
-<div mat-dialog-actions>
+<div mat-dialog-actions style="justify-content: center;">
 
-<button mat-raised-button (click)="onNoClick()">Cancel</button>
+<button class = "btn" mat-raised-button (click)="onNoClick()">Cancel</button>
 
-<button class="right-align" mat-raised-button color="primary"
+<button class="btn" mat-raised-button color="primary"
 [mat-dialog-close]="editingStudent" (click)="onEditClick()">Done</button>
 
 </div>

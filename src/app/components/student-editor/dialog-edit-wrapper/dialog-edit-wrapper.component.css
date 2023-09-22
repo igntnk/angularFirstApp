@@ -1,5 +1,12 @@
-.right-align {
+@font-face {
+  font-family: "San Francisco";
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+}
 
-  margin: 0 0 0 auto !important;
+.btn{
+  margin-right: 5px;
+}
 
-  }
+.headerTxt{
+  font-family: 'San Francisco' !important;
+}
