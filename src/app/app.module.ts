@@ -1,3 +1,4 @@
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './service/in-memory-data.service';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,7 @@ import { TableStudentsComponent } from './components/table-students/table-studen
 import { DialogEditWrapperComponent } from './components/student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { DialogEditInfoComponent } from './components/student-editor/dialog-edit-info/dialog-edit-info.component';
 import { MaterialTableComponent } from './components/material-table/material-table.component';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { MaterialTableComponent } from './components/material-table/material-tab
     MatFormFieldModule,
     HttpClientModule,
     MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
       )
