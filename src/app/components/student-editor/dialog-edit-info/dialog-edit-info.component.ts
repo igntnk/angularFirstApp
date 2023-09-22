@@ -26,6 +26,8 @@ export class DialogEditInfoComponent {
   ngOnInit() {}
 
   onNoClick(): void {
+    this.editingStudent.name = this.localName;
+    this.editingStudent.surname = this.localSurname;
     this.dialogRef.close();
     this.editingStudent.name= this.localName;
     this.editingStudent.surname = this.localSurname;
