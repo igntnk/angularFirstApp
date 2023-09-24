@@ -17,17 +17,15 @@ export class BaseServiceService {
   }
 
   addNewStudent(student: Student): Observable<Student>{
-    console.log('addNewStudent');
     return this.http.post<Student>(this.studentsUrl,student).pipe();
   }
 
-  deleteStudent(studentID: number): Observable<Student>{
-    console.log('delete student');
-    return this.http.delete<Student>(this.studentsUrl +"/"+ studentID).pipe();
+  deleteStudent(student: Student): Observable<Student>{
+    console.log(student.id);
+    return this.http.delete<Student>(this.studentsUrl +"/"+ student.id).pipe();
   }
 
   editStudent(student: Student): Observable<Student>{
-    console.log("editing student");
     return this.http.put<Student>(this.studentsUrl,student).pipe();
   }
 }

@@ -27,7 +27,12 @@
     <!-- Action Column -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-      <td mat-cell *matCellDef="let row"> {{row.action}} </td>
+      <td mat-cell *matCellDef="let row">
+        <div class="example-button-row">
+          <button mat-button (click)="editStudent(row)">Edit</button>
+          <button mat-button color="accent" (click)="deleteUser(row)">Delete</button>
+        </div>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -41,3 +46,5 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </div>
+
+<button mat-button color="accent" (click)="addNewStudent()">Add Student</button>

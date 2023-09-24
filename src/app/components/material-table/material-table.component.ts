@@ -11,11 +11,16 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DialogEditInfoComponent } from '../student-editor/dialog-edit-info/dialog-edit-info.component';
 import { DialogEditWrapperComponent } from '../student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
+import { MatTable } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-material-table',
   templateUrl: './material-table.component.html',
-  styleUrls: ['./material-table.component.css']
+  styleUrls: ['./material-table.component.css'],
 })
 
 export class MaterialTableComponent implements AfterViewInit {
@@ -24,6 +29,7 @@ export class MaterialTableComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<any>;
 
   constructor(private baseService: BaseServiceService,
     public dialog:MatDialog) {
@@ -54,7 +60,9 @@ export class MaterialTableComponent implements AfterViewInit {
       {
         console.log("adding new student: "+ result.name);
         this.baseService.addNewStudent(result).subscribe(k =>
-          this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data)));
+          this.baseService.getAllStudents().subscribe(data => {
+            this.dataSource = new MatTableDataSource(data);
+          }));
       }
     })
   }
@@ -64,21 +72,21 @@ export class MaterialTableComponent implements AfterViewInit {
       width: '400px',
       data: student
     });
-    dialogEdiingStudent.afterClosed().subscribe((result:Student)=>{
-      if(result != null)
-      {
-        console.log("adding new student: "+ result.name);
-        this.baseService.editStudent(result).subscribe(k =>
-          this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data)));
-      }
+    dialogEdiingStudent.afterClosed().subscribe((result: Student) =>{
+      this.baseService.editStudent(result).subscribe(data =>{
+      });
     })
+
+
   }
 
-  deleteUser(studentID: number){
-    if(studentID != null){
-      console.log("delete student");
-      this.baseService.deleteStudent(studentID).subscribe(k =>
-        this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data)));
+  deleteUser(student: Student){
+    if(student != null){
+      this.baseService.deleteStudent(student).subscribe(k =>{
+        this.baseService.getAllStudents().subscribe(data => {
+          this.dataSource = new MatTableDataSource(data);
+        })
+      })
     }
   }
 }

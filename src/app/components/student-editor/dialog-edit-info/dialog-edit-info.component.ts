@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
@@ -29,11 +30,9 @@ export class DialogEditInfoComponent {
     this.editingStudent.name = this.localName;
     this.editingStudent.surname = this.localSurname;
     this.dialogRef.close();
-    this.editingStudent.name= this.localName;
-    this.editingStudent.surname = this.localSurname;
   }
 
   onEditClick(){
-    this.dialogRef.close();
+    this.dialogRef.close(this.editingStudent);
   }
 }

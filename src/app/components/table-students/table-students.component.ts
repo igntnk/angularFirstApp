@@ -57,10 +57,10 @@ export class TableStudentsComponent implements OnInit{
     })
   }
 
-  deleteUser(studentID: number){
-    if(studentID != null){
+  deleteUser(student: Student){
+    if(student != null){
       console.log("delete student");
-      this.baseService.deleteStudent(studentID).subscribe(k =>
+      this.baseService.deleteStudent(student).subscribe(k =>
         this.baseService.getAllStudents().subscribe(data => this.students = data));
     }
   }
