@@ -8,16 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class BaseServiceService {
 
-  private studentsUrl = 'api/students';
+  private studentsUrl = 'api/base';
 
   constructor(private http: HttpClient) { }
 
   getAllStudents(): Observable<Student[]> {
+    //this.http.get<Student[]>(this.studentsUrl).subscribe(data => console.log(data));
     return this.http.get<Student[]>(this.studentsUrl);
   }
 
   addNewStudent(student: Student): Observable<Student>{
-    return this.http.post<Student>(this.studentsUrl,student).pipe();
+    return this.http.post<Student>(this.studentsUrl, student).pipe();
   }
 
   deleteStudent(student: Student): Observable<Student>{

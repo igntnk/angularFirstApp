@@ -20,6 +20,7 @@ import { DialogEditInfoComponent } from './components/student-editor/dialog-edit
 import { MaterialTableComponent } from './components/material-table/material-table.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,9 +41,7 @@ import { MaterialTableComponent } from './components/material-table/material-tab
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-      )
+
   ],
   providers: [],
   bootstrap: [AppComponent]

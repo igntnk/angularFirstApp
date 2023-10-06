@@ -25,7 +25,8 @@ import { MatTable } from '@angular/material/table';
 
 export class MaterialTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'surname', 'action'];
-  dataSource: MatTableDataSource<Student>;
+  dataSource = new MatTableDataSource<Student>([]);
+  localStudent: Student = new Student;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,12 +34,13 @@ export class MaterialTableComponent implements AfterViewInit {
 
   constructor(private baseService: BaseServiceService,
     public dialog:MatDialog) {
-    baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
   }
 
   ngAfterViewInit() {
+    this.baseService.getAllStudents().subscribe(data => this.dataSource.data = data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.baseService.getAllStudents().subscribe(data => console.log(data));
   }
 
   applyFilter(event: Event) {
@@ -59,21 +61,28 @@ export class MaterialTableComponent implements AfterViewInit {
       if(result != null)
       {
         console.log("adding new student: "+ result.name);
-        this.baseService.addNewStudent(result).subscribe(k =>
+        this.baseService.addNewStudent(result).subscribe(unused => {
           this.baseService.getAllStudents().subscribe(data => {
-            this.dataSource = new MatTableDataSource(data);
-          }));
+            this.dataSource.data = data;
+          })
+        });
       }
     })
   }
 
   editStudent(student: Student){
+    this.localStudent.id = student.id;
+    this.localStudent.name = student.name;
+    this.localStudent.surname = student.surname;
     const dialogEdiingStudent = this.dialog.open(DialogEditInfoComponent, {
       width: '400px',
-      data: student
+      data: this.localStudent
     });
     dialogEdiingStudent.afterClosed().subscribe((result: Student) =>{
-      this.baseService.editStudent(result).subscribe(data =>{
+      this.baseService.editStudent(result).subscribe(unused =>{
+        this.baseService.getAllStudents().subscribe(data => {
+          this.dataSource.data = data;
+        })
       });
     })
 
@@ -82,11 +91,11 @@ export class MaterialTableComponent implements AfterViewInit {
 
   deleteUser(student: Student){
     if(student != null){
-      this.baseService.deleteStudent(student).subscribe(k =>{
-        this.baseService.getAllStudents().subscribe(data => {
-          this.dataSource = new MatTableDataSource(data);
-        })
-      })
+      this.baseService.deleteStudent(student).subscribe(unused => {
+          this.baseService.getAllStudents().subscribe(data => {
+            this.dataSource.data = data;
+          })
+      });
     }
   }
 }
