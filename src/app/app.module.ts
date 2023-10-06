@@ -10,6 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './service/in-memory-data.service';
 import { MatTableModule } from '@angular/material/table';
+import {Component} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +45,9 @@ import { MaterialTableComponent } from './components/material-table/material-tab
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
