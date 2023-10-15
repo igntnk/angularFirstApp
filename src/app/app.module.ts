@@ -14,6 +14,7 @@ import {Component} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { TableStudentsComponent } from './components/table-students/table-studen
 import { DialogEditWrapperComponent } from './components/student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { DialogEditInfoComponent } from './components/student-editor/dialog-edit-info/dialog-edit-info.component';
 import { MaterialTableComponent } from './components/material-table/material-table.component';
+import { BaseServiceService } from './service/base-service.service';
+import { SessionStorageService } from 'angular-web-storage';
 
 
 
@@ -47,9 +50,10 @@ import { MaterialTableComponent } from './components/material-table/material-tab
     MatPaginatorModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [BaseServiceService,SessionStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
