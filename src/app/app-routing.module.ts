@@ -4,7 +4,7 @@ import { HomeComponent } from './components/home/home/home.component';
 import { LoginComponent } from './components/home/login/login.component';
 import { AdminComponent } from './components/home/admin/admin.component';
 import { StudentComponent } from './components/home/student/student.component';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './model/auth.guard';
 
 const routes: Routes = [{
   path:'',

@@ -1,10 +1,10 @@
-import { ROLE, ROLE_MAPPER } from '../model/role';
+import { ROLE, ROLE_MAPPER } from './role';
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { map } from 'rxjs';
-import { AuthService } from '../model/auth.service';
-import { CredentialResponce } from '../model/auth/credintialResponse';
+import { AuthService } from './auth.service';
+import { CredentialResponce } from './auth/credintialResponse';
 
 @Injectable({
 providedIn: 'root'

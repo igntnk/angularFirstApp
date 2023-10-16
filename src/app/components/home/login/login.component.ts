@@ -1,14 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/model/auth.service';
 import { Credential } from 'src/app/model/credentials';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   credential!: Credential;
     errorAuth!: boolean;

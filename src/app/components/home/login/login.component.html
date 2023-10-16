@@ -1,21 +1,15 @@
-<div>
-  <div>
-    <h1>Вход</h1>
+<div mat-dialog-content style="display:grid; padding: 0px; margin: auto; width:33%; font-family: Roboto Condensed;">
+  <h1 mat-dialog-title align="center">Login Page</h1>
+  <mat-form-field class="full-width-input">
+      <input matInput type="text" placeholder="Username" [(ngModel)]="credential.username" required>
+  </mat-form-field>
 
-      <div>
-        <input matInput type="text" placeholder="Аккаунт">
-      </div>
+  <mat-form-field class="full-width-input">
+      <input matInput type="password" placeholder="Password" [(ngModel)]="credential.password" required>
+  </mat-form-field>
 
-      <div>
-        <input matInput placeholder="Пароль">
-      </div>
-
-      <div *ngIf="errorAuth" style="margin-bottom: 25px; color: red">
-         Неправильное имя или пароль
-      </div>
-
-    <button (click)="login()">Войти</button>
-
+  <div *ngIf="errorAuth" style="margin-bottom: 25px; color: red">
+      Wrong username or password
   </div>
-
+  <button mat-flat-button color="primary" (click)="login()">Log in</button>
 </div>

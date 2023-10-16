@@ -16,7 +16,7 @@ export class AuthService {
 
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private router: Router,
+    constructor(private router: Router,
     private http: HttpClient,
     private sessionStorage: SessionStorageService) {
       const auth = this.sessionStorage.get('auth');
@@ -35,9 +35,9 @@ export class AuthService {
       }
 
      return JSON.parse(auth);
-   }
+    }
 
-   isStudent(): boolean {
+    isStudent(): boolean {
       return this.LoggedUser.authorities.filter((auth: Authority) => {
           return auth.authority == ROLE.STUDENT;
       }).length != 0;
@@ -60,9 +60,9 @@ export class AuthService {
         return access;
     }
 
-   static checkSection(url: string, section: string): boolean {
+    static checkSection(url: string, section: string): boolean {
       return url.indexOf(section) == 0;
-   }
+    }
 
     authenticate(crdls: Credential, failureHandler: any) {
       const headers = new HttpHeaders(crdls ? {
@@ -75,7 +75,7 @@ export class AuthService {
               this.responseProcessing(data, failureHandler);
           }
       });
-   }
+    }
 
     private responseProcessing(data: any, failureHandler: any) {
       const response: CredentialResponce = CredentialResponce.convertToObj(data);
@@ -83,7 +83,13 @@ export class AuthService {
       if(response.authenticated == true) {
           this.updateAuth(response);
           this.loggedIn.next(true);
-          this.router.navigate(['admin']);
+          if(this.isAdmin()){
+            this.router.navigate(['admin']);
+          }
+          else
+          {
+            this.router.navigate(['student']);
+          }
           return true;
       }
       else {
@@ -91,7 +97,7 @@ export class AuthService {
       }
 
       return false;
-   }
+    }
 
     private updateAuth(response: CredentialResponce) {
       this.sessionStorage.set('auth', JSON.stringify(response));

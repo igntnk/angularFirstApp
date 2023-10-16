@@ -25,6 +25,10 @@ import { DialogEditInfoComponent } from './components/student-editor/dialog-edit
 import { MaterialTableComponent } from './components/material-table/material-table.component';
 import { BaseServiceService } from './service/base-service.service';
 import { SessionStorageService } from 'angular-web-storage';
+import { LoginComponent } from './components/home/login/login.component';
+import { AdminComponent } from './components/home/admin/admin.component';
+import { HomeComponent } from './components/home/home/home.component';
+import { StudentComponent } from './components/home/student/student.component';
 
 
 
@@ -35,7 +39,11 @@ import { SessionStorageService } from 'angular-web-storage';
     TableStudentsComponent,
     DialogEditWrapperComponent,
     DialogEditInfoComponent,
-    MaterialTableComponent
+    MaterialTableComponent,
+    LoginComponent,
+    AdminComponent,
+    HomeComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,
