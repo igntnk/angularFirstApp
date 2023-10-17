@@ -83,13 +83,11 @@ export class AuthService {
       if(response.authenticated == true) {
           this.updateAuth(response);
           this.loggedIn.next(true);
-          if(this.isAdmin()){
+          if(this.isAdmin())
             this.router.navigate(['admin']);
-          }
           else
-          {
             this.router.navigate(['student']);
-          }
+
           return true;
       }
       else {

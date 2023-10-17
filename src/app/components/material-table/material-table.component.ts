@@ -37,10 +37,10 @@ export class MaterialTableComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.baseService.getAllStudents().subscribe(data => this.dataSource.data = data);
+    this.baseService.getAllStudentsAdmin().subscribe(data => this.dataSource.data = data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.baseService.getAllStudents().subscribe(data => console.log(data));
+    this.baseService.getAllStudentsAdmin().subscribe(data => console.log(data));
   }
 
   applyFilter(event: Event) {
@@ -62,7 +62,7 @@ export class MaterialTableComponent implements AfterViewInit {
       {
         console.log("adding new student: "+ result.name);
         this.baseService.addNewStudent(result).subscribe(unused => {
-          this.baseService.getAllStudents().subscribe(data => {
+          this.baseService.getAllStudentsAdmin().subscribe(data => {
             this.dataSource.data = data;
           })
         });
@@ -80,7 +80,7 @@ export class MaterialTableComponent implements AfterViewInit {
     });
     dialogEdiingStudent.afterClosed().subscribe((result: Student) =>{
       this.baseService.editStudent(result).subscribe(unused =>{
-        this.baseService.getAllStudents().subscribe(data => {
+        this.baseService.getAllStudentsAdmin().subscribe(data => {
           this.dataSource.data = data;
         })
       });
@@ -92,7 +92,7 @@ export class MaterialTableComponent implements AfterViewInit {
   deleteUser(student: Student){
     if(student != null){
       this.baseService.deleteStudent(student).subscribe(unused => {
-          this.baseService.getAllStudents().subscribe(data => {
+          this.baseService.getAllStudentsAdmin().subscribe(data => {
             this.dataSource.data = data;
           })
       });

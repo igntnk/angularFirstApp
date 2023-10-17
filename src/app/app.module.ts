@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StudentEditorComponent } from './components/student-editor/student-editor.component';
-import { TableStudentsComponent } from './components/table-students/table-students.component';
 import { DialogEditWrapperComponent } from './components/student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { DialogEditInfoComponent } from './components/student-editor/dialog-edit-info/dialog-edit-info.component';
 import { MaterialTableComponent } from './components/material-table/material-table.component';
@@ -36,7 +35,6 @@ import { StudentComponent } from './components/home/student/student.component';
   declarations: [
     AppComponent,
     StudentEditorComponent,
-    TableStudentsComponent,
     DialogEditWrapperComponent,
     DialogEditInfoComponent,
     MaterialTableComponent,

@@ -8,12 +8,18 @@ import { Observable } from 'rxjs';
 })
 export class BaseServiceService {
 
-  private studentsUrl = 'api/students';
+  private studentsUrl = 'api/home';
+  private adminUrl = 'api/admin'
 
   constructor(private http: HttpClient) { }
 
-  getAllStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.studentsUrl);
+  getAllStudentsAdmin(): Observable<Student[]> {
+    debugger;
+    return this.http.get<Student[]>(this.adminUrl + "/users");
+  }
+
+  getAllStudentsUser(): Observable<Student[]> {
+    return this.http.get<Student[]>(this.studentsUrl + "/users");
   }
 
   addNewStudent(student: Student): Observable<Student>{
