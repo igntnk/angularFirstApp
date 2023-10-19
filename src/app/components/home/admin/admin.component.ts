@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/model/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Student } from 'src/app/modules/students';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +16,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MatTable } from '@angular/material/table';
+import { Credential } from 'src/app/model/credentials';
+
 
 @Component({
   selector: 'app-admin',
@@ -24,20 +28,21 @@ export class AdminComponent {
   displayedColumns: string[] = ['id', 'name', 'surname', 'action'];
   dataSource = new MatTableDataSource<Student>([]);
   localStudent: Student = new Student;
+  credential: Credential = new Credential();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<any>;
 
-  constructor(private baseService: BaseServiceService,
-    public dialog:MatDialog) {
+  constructor(private baseService: BaseServiceService, private cookie: CookieService,
+    private authService:AuthService,public dialog:MatDialog) {
   }
 
   ngAfterViewInit() {
-    debugger;
-    this.baseService.getAllStudentsAdmin().subscribe(data => {
+    this.credential.username = this.cookie.get("Username");
+    this.credential.password = this.cookie.get("Password");
+    this.authService.getUsersByAdmin(this.credential).subscribe(data => {
       this.dataSource.data = data;
-      console.log(data);
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -61,8 +66,8 @@ export class AdminComponent {
       if(result != null)
       {
         console.log("adding new student: "+ result.name);
-        this.baseService.addNewStudent(result).subscribe(unused => {
-          this.baseService.getAllStudentsAdmin().subscribe(data => {
+        this.authService.addUser(result,this.credential).subscribe(unused => {
+          this.authService.getUsersByAdmin(this.credential).subscribe(data => {
             this.dataSource.data = data;
           })
         });
@@ -79,8 +84,8 @@ export class AdminComponent {
       data: this.localStudent
     });
     dialogEdiingStudent.afterClosed().subscribe((result: Student) =>{
-      this.baseService.editStudent(result).subscribe(unused =>{
-        this.baseService.getAllStudentsAdmin().subscribe(data => {
+      this.authService.editUser(result,this.credential).subscribe(unused =>{
+        this.authService.getUsersByAdmin(this.credential).subscribe(data => {
           this.dataSource.data = data;
         })
       });
@@ -91,8 +96,9 @@ export class AdminComponent {
 
   deleteUser(student: Student){
     if(student != null){
-      this.baseService.deleteStudent(student).subscribe(unused => {
-          this.baseService.getAllStudentsAdmin().subscribe(data => {
+      debugger;
+      this.authService.deleteUser(student,this.credential).subscribe(unused => {
+          this.authService.getUsersByAdmin(this.credential).subscribe(data => {
             this.dataSource.data = data;
           })
       });

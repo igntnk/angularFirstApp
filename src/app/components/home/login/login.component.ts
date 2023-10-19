@@ -1,10 +1,11 @@
+import { CookieService } from 'ngx-cookie-service';
 import { Component, EventEmitter, Input, NgModule, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/model/auth.service';
 import { Credential } from 'src/app/model/credentials';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-
+import '@angular/compiler';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 export class LoginComponent implements OnInit {
   credential!: Credential;
-    errorAuth!: boolean;
+  errorAuth!: boolean;
 
-    constructor(private authService: AuthService) {}
+    constructor(private cookie: CookieService, private authService: AuthService) {}
 
     ngOnInit(){
         this.authService.clearLoginData();
@@ -25,8 +26,12 @@ export class LoginComponent implements OnInit {
     }
 
     login(){
-        this.authService.authenticate(this.credential, () => {
-            this.errorAuth = true;
-        })
+
+      this.cookie.set("Password",this.credential.password);
+      this.cookie.set("Username", this.credential.username);
+
+      this.authService.authenticate(this.credential, () => {
+          this.errorAuth = true;
+      })
     }
 }

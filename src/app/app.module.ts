@@ -28,6 +28,7 @@ import { LoginComponent } from './components/home/login/login.component';
 import { AdminComponent } from './components/home/admin/admin.component';
 import { HomeComponent } from './components/home/home/home.component';
 import { StudentComponent } from './components/home/student/student.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -59,7 +60,7 @@ import { StudentComponent } from './components/home/student/student.component';
     MatIconModule,
     CommonModule
   ],
-  providers: [BaseServiceService,SessionStorageService],
+  providers: [BaseServiceService,SessionStorageService,CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

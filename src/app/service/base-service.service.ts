@@ -9,12 +9,11 @@ import { Observable } from 'rxjs';
 export class BaseServiceService {
 
   private studentsUrl = 'api/home';
-  private adminUrl = 'api/admin'
+  private adminUrl = 'api/admin';
 
   constructor(private http: HttpClient) { }
 
   getAllStudentsAdmin(): Observable<Student[]> {
-    debugger;
     return this.http.get<Student[]>(this.adminUrl + "/users");
   }
 
@@ -23,14 +22,14 @@ export class BaseServiceService {
   }
 
   addNewStudent(student: Student): Observable<Student>{
-    return this.http.post<Student>(this.studentsUrl,student).pipe();
+    return this.http.post<Student>(this.adminUrl,student).pipe();
   }
 
   deleteStudent(student: Student): Observable<Student>{
-    return this.http.delete<Student>(this.studentsUrl +"/"+ student.id).pipe();
+    return this.http.delete<Student>(this.adminUrl +"/"+ student.id).pipe();
   }
 
   editStudent(student: Student): Observable<Student>{
-    return this.http.put<Student>(this.studentsUrl,student).pipe();
+    return this.http.put<Student>(this.adminUrl,student).pipe();
   }
 }
