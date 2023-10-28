@@ -5,19 +5,15 @@ import { Student } from 'src/app/modules/students';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseServiceService } from 'src/app/service/base-service.service';
 import { AfterViewInit, Component, ViewChild, NgModule } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {  MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {  MatSort, MatSortModule} from '@angular/material/sort';
+import {  MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { DialogEditInfoComponent } from '../../student-editor/dialog-edit-info/dialog-edit-info.component';
 import { DialogEditWrapperComponent } from '../../student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
 import { MatTable } from '@angular/material/table';
-import { Credential } from 'src/app/model/credentials';
 import { CredentialResponce } from 'src/app/model/auth/credintialResponse';
+import { MatSortable } from '@angular/material/sort';
+import { StudentEditorComponent } from '../../student-editor/student-editor.component';
 
 
 @Component({
@@ -30,10 +26,15 @@ export class AdminComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Student>([]);
   localStudent: Student = new Student;
   user!: CredentialResponce;
+  pageEvent!: PageEvent;
+  pageIndex:number = 0;
+  pageSize:number = 5;
+  length: number = 100;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatPaginatorIntl) paginatorLabel: MatPaginatorIntl;
 
   constructor(private baseService: BaseServiceService, private cookie: CookieService,
     private authService:AuthService,public dialog:MatDialog) {
@@ -41,11 +42,11 @@ export class AdminComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.user = this.authService.LoggedUser;
-    this.authService.getUsersByAdmin().subscribe(data => {
-      this.dataSource.data = data;
-    });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize).subscribe(data => {
+      this.dataSource.data = data;
+    });
   }
 
   applyFilter(event: Event) {
@@ -102,5 +103,14 @@ export class AdminComponent implements AfterViewInit {
           })
       });
     }
+  }
+
+  public changeInfo(event:PageEvent){
+    this.pageSize = this.paginator.pageSize;
+    this.pageIndex = this.paginator.pageIndex;
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize).subscribe(data =>{
+      this.dataSource.data = data;
+    });
+    return event;
   }
 }

@@ -119,7 +119,9 @@ export class AuthService {
       return this.http.post<Student>('api/admin/users',student).pipe();
   }
 
-
+  public getCurrentUsers(pageIndex: number, pageSize: number):Observable<any>{
+    return this.http.get('api/admin/users/'+pageIndex +'/'+pageSize).pipe();
+  }
 
   private updateAuth(response: CredentialResponce) {
     this.sessionStorage.set('auth', JSON.stringify(response));
