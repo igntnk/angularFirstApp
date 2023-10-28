@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
 
     login(){
 
-      this.cookie.set("Password",this.credential.password);
-      this.cookie.set("Username", this.credential.username);
+      //this.cookie.set("Password",this.credential.password);
+      //this.cookie.set("Username", this.credential.username);
 
       this.authService.authenticate(this.credential, () => {
           this.errorAuth = true;

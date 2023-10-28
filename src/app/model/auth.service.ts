@@ -70,10 +70,12 @@ export class AuthService {
 
   authenticate(crdls: Credential, failureHandler: any) {
     const headers = new HttpHeaders(crdls ? {
-    authorization: 'Basic ' + btoa(crdls.username + ':' + crdls.password),
-    "X-Requested-With": "XMLHttpRequest"
-    } : {});
+      authorization: 'Basic ' + btoa(crdls.username + ':' + crdls.password),
+      "X-Requested-With": "XMLHttpRequest"
+      } : {}
+    );
 
+    console.log('authenticate ')
     this.authentication(headers).subscribe((data: CredentialResponce) => {
       if (data != null) {
         this.responseProcessing(data, failureHandler);
@@ -100,39 +102,21 @@ export class AuthService {
     return false;
   }
 
-  public getUsersByAdmin(crdls: Credential):Observable<any> {
-    const headers = new HttpHeaders(crdls ? {
-      authorization: 'Basic ' + btoa(crdls.username + ':' + crdls.password),
-      "X-Requested-With": "XMLHttpRequest"
-      } : {});
-    return this.http.get('api/admin/users', { headers: headers }).pipe();
+  public getUsersByAdmin():Observable<any> {
+    return this.http.get('api/admin/users').pipe();
   }
 
-  public deleteUser(student:Student, crdls: Credential):Observable<any> {
-    const headers = new HttpHeaders(crdls ? {
-      authorization: 'Basic ' + btoa(crdls.username + ':' + crdls.password),
-      "X-Requested-With": "XMLHttpRequest"
-      } : {});
-
-
-    return this.http.delete<Student>('api/admin/users/'+ student.id,{ headers: headers } ).pipe();
+  public deleteUser(student:Student):Observable<any> {
+    return this.http.delete<Student>('api/admin/users/'+ student.id ).pipe();
   }
 
-  public editUser(student:Student, crdls: Credential):Observable<any> {
-    const headers = new HttpHeaders(crdls ? {
-      authorization: 'Basic ' + btoa(crdls.username + ':' + crdls.password),
-      "X-Requested-With": "XMLHttpRequest"
-      } : {});
-      return this.http.put<Student>('api/admin/users',student,{ headers: headers }).pipe();
+  public editUser(student:Student):Observable<any> {
+
+      return this.http.put<Student>('api/admin/users',student).pipe();
   }
 
-  public addUser(student:Student,crdls: Credential):Observable<any> {
-    const headers = new HttpHeaders(crdls ? {
-      authorization: 'Basic ' + btoa(crdls.username + ':' + crdls.password),
-      "X-Requested-With": "XMLHttpRequest"
-      } : {});
-      console.log(headers);
-      return this.http.post<Student>('api/admin/users',student,{ headers: headers }).pipe();
+  public addUser(student:Student):Observable<any> {
+      return this.http.post<Student>('api/admin/users',student).pipe();
   }
 
 

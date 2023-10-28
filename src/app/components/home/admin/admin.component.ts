@@ -17,6 +17,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MatTable } from '@angular/material/table';
 import { Credential } from 'src/app/model/credentials';
+import { CredentialResponce } from 'src/app/model/auth/credintialResponse';
 
 
 @Component({
@@ -24,11 +25,11 @@ import { Credential } from 'src/app/model/credentials';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent {
+export class AdminComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'surname', 'action'];
   dataSource = new MatTableDataSource<Student>([]);
   localStudent: Student = new Student;
-  credential: Credential = new Credential();
+  user!: CredentialResponce;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,9 +40,8 @@ export class AdminComponent {
   }
 
   ngAfterViewInit() {
-    this.credential.username = this.cookie.get("Username");
-    this.credential.password = this.cookie.get("Password");
-    this.authService.getUsersByAdmin(this.credential).subscribe(data => {
+    this.user = this.authService.LoggedUser;
+    this.authService.getUsersByAdmin().subscribe(data => {
       this.dataSource.data = data;
     });
     this.dataSource.paginator = this.paginator;
@@ -66,8 +66,8 @@ export class AdminComponent {
       if(result != null)
       {
         console.log("adding new student: "+ result.name);
-        this.authService.addUser(result,this.credential).subscribe(unused => {
-          this.authService.getUsersByAdmin(this.credential).subscribe(data => {
+        this.authService.addUser(result).subscribe(unused => {
+          this.authService.getUsersByAdmin().subscribe(data => {
             this.dataSource.data = data;
           })
         });
@@ -84,8 +84,8 @@ export class AdminComponent {
       data: this.localStudent
     });
     dialogEdiingStudent.afterClosed().subscribe((result: Student) =>{
-      this.authService.editUser(result,this.credential).subscribe(unused =>{
-        this.authService.getUsersByAdmin(this.credential).subscribe(data => {
+      this.authService.editUser(result).subscribe(unused =>{
+        this.authService.getUsersByAdmin().subscribe(data => {
           this.dataSource.data = data;
         })
       });
@@ -96,9 +96,8 @@ export class AdminComponent {
 
   deleteUser(student: Student){
     if(student != null){
-      debugger;
-      this.authService.deleteUser(student,this.credential).subscribe(unused => {
-          this.authService.getUsersByAdmin(this.credential).subscribe(data => {
+      this.authService.deleteUser(student).subscribe(unused => {
+          this.authService.getUsersByAdmin().subscribe(data => {
             this.dataSource.data = data;
           })
       });

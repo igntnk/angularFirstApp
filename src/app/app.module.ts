@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './service/in-memory-data.service';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import {Component} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -54,6 +56,7 @@ import { CookieService } from 'ngx-cookie-service';
     HttpClientModule,
     MatInputModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
     MatDividerModule,
