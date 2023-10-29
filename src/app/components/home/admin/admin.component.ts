@@ -12,8 +12,7 @@ import { DialogEditInfoComponent } from '../../student-editor/dialog-edit-info/d
 import { DialogEditWrapperComponent } from '../../student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { MatTable } from '@angular/material/table';
 import { CredentialResponce } from 'src/app/model/auth/credintialResponse';
-import { MatSortable } from '@angular/material/sort';
-import { StudentEditorComponent } from '../../student-editor/student-editor.component';
+import { PageResponse } from 'src/app/PageResponce';
 
 
 @Component({
@@ -29,7 +28,8 @@ export class AdminComponent implements AfterViewInit {
   pageEvent!: PageEvent;
   pageIndex:number = 0;
   pageSize:number = 5;
-  length: number = 100;
+  length!: number;
+  constLength: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,9 +44,16 @@ export class AdminComponent implements AfterViewInit {
     this.user = this.authService.LoggedUser;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
     this.authService.getCurrentUsers(this.pageIndex,this.pageSize).subscribe(data => {
+      console.log(data);
+
       this.dataSource.data = data;
+
+      data.content[0];
+      debugger;
     });
+    console.log("index: " + this.pageIndex + " Size: " + this.pageSize + " length: " + this.paginator.length);
   }
 
   applyFilter(event: Event) {
@@ -106,10 +113,19 @@ export class AdminComponent implements AfterViewInit {
   }
 
   public changeInfo(event:PageEvent){
-    this.pageSize = this.paginator.pageSize;
-    this.pageIndex = this.paginator.pageIndex;
-    this.authService.getCurrentUsers(this.pageIndex,this.pageSize).subscribe(data =>{
+    let localSize:number;
+    let localIndex:number;
+
+    localSize = this.paginator.pageSize;
+    localIndex = this.paginator.pageIndex;
+    this.authService.getCurrentUsers(localIndex,localSize).subscribe((data):PageResponse =>{
       this.dataSource.data = data;
+      this.dataSource
+      this.authService.getAmount().subscribe(data => {
+        this.length = data;
+        this.constLength = this.length;
+        debugger
+      })
     });
     return event;
   }
