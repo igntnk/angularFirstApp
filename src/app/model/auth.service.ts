@@ -119,8 +119,13 @@ export class AuthService {
       return this.http.post<Student>('api/admin/users',student).pipe();
   }
 
-  public getCurrentUsers(pageIndex: number, pageSize: number):Observable<any>{
-    return this.http.get('api/admin/users/'+pageIndex +'/'+pageSize).pipe();
+  public getCurrentUsers(pageIndex: number, pageSize: number,filter: String):Observable<any>{
+    if(filter.length == 0){
+      return this.http.get('api/admin/users/'+pageIndex +'/'+pageSize).pipe();
+    }
+    else{
+      return this.http.get('api/admin/users/filter/'+pageIndex +'/'+pageSize+'/'+filter).pipe();
+    }
   }
 
   private updateAuth(response: CredentialResponce) {

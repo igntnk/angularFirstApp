@@ -12,7 +12,7 @@ import { DialogEditInfoComponent } from '../../student-editor/dialog-edit-info/d
 import { DialogEditWrapperComponent } from '../../student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { MatTable } from '@angular/material/table';
 import { CredentialResponce } from 'src/app/model/auth/credintialResponse';
-import { PageResponse } from 'src/app/PageResponce';
+import { PageResponse } from 'src/app/model/pageResponse';
 
 
 @Component({
@@ -30,6 +30,7 @@ export class AdminComponent implements AfterViewInit {
   pageSize:number = 5;
   length!: number;
   constLength: number;
+  filter: String = "";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,24 +46,26 @@ export class AdminComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.authService.getCurrentUsers(this.pageIndex,this.pageSize).subscribe(data => {
-      console.log(data);
-
-      this.dataSource.data = data;
-
-      data.content[0];
-      debugger;
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, "").subscribe((data:PageResponse) => {
+      this.dataSource.data = data.content;
+      this.length = data.totalElements;
     });
-    console.log("index: " + this.pageIndex + " Size: " + this.pageSize + " length: " + this.paginator.length);
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filter = (event.target as HTMLInputElement).value;
+    this.authService.getCurrentUsers(this.paginator.pageIndex,this.paginator.pageSize,this.filter).subscribe((data:PageResponse) => {
+      this.dataSource.data = data.content;
+      this.dataSource._updatePaginator(data.totalElements);
+      this.pageIndex = data.number;
+      this.paginator.pageIndex = data.number;
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+      console.log(data);
+
+      // console.log("PAGINATOR: index: " + this.paginator.pageIndex + " size: " + this.paginator.pageSize + " length: " + this.paginator.length);
+      // console.log("LOCAL: index: " + this.pageIndex + " size: " + this.pageSize + " length: " + this.length);
+    });
+    return event;
   }
 
   addNewStudent(){
@@ -113,19 +116,13 @@ export class AdminComponent implements AfterViewInit {
   }
 
   public changeInfo(event:PageEvent){
-    let localSize:number;
-    let localIndex:number;
-
-    localSize = this.paginator.pageSize;
-    localIndex = this.paginator.pageIndex;
-    this.authService.getCurrentUsers(localIndex,localSize).subscribe((data):PageResponse =>{
-      this.dataSource.data = data;
-      this.dataSource
-      this.authService.getAmount().subscribe(data => {
-        this.length = data;
-        this.constLength = this.length;
-        debugger
-      })
+    this.authService.getCurrentUsers(this.paginator.pageIndex,this.paginator.pageSize,this.filter).subscribe((data:PageResponse) => {
+      this.dataSource.data = data.content;
+      this.dataSource._updatePaginator(data.totalElements);
+      this.pageIndex = data.number;
+      console.log(data);
+      // console.log("PAGINATOR: index: " + this.paginator.pageIndex + " size: " + this.paginator.pageSize + " length: " + this.paginator.length);
+      // console.log("LOCAL: index: " + this.pageIndex + " size: " + this.pageSize + " length: " + this.length);
     });
     return event;
   }
