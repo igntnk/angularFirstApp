@@ -46,7 +46,7 @@ export class AdminComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, "").subscribe((data:PageResponse) => {
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, "$empty").subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.length = data.totalElements;
     });
@@ -54,6 +54,7 @@ export class AdminComponent implements AfterViewInit {
 
   applyFilter(event: Event) {
     this.filter = (event.target as HTMLInputElement).value;
+    if(this.filter.length == 0 ){this.filter = "$empty";}
     this.authService.getCurrentUsers(this.paginator.pageIndex,this.paginator.pageSize,this.filter).subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.dataSource._updatePaginator(data.totalElements);
@@ -116,6 +117,7 @@ export class AdminComponent implements AfterViewInit {
   }
 
   public changeInfo(event:PageEvent){
+    if(this.filter.length == 0 ){this.filter = "$empty";}
     this.authService.getCurrentUsers(this.paginator.pageIndex,this.paginator.pageSize,this.filter).subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.dataSource._updatePaginator(data.totalElements);
