@@ -120,6 +120,9 @@ export class AuthService {
   }
 
   public getCurrentUsers(pageIndex: number, pageSize: number,filter: string,sortColumn:string,sortDirection:string):Observable<any>{
+    if(sortDirection == ""){
+      sortDirection = "asc";
+    }
     const params = new HttpParams().set("filterData", filter).
                                     set("sortColumn", sortColumn).
                                     set("sortDirection",sortDirection);

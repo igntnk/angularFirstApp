@@ -46,8 +46,7 @@ export class AdminComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, this.sort.active,this.sort.direction).subscribe((data:PageResponse) => {
-      console.log(data);
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, "user_id","asc").subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.length = data.totalElements;
     });
@@ -62,8 +61,6 @@ export class AdminComponent implements AfterViewInit {
       this.pageIndex = data.number;
       this.paginator.pageIndex = data.number;
 
-      console.log(data);
-
       // console.log("PAGINATOR: index: " + this.paginator.pageIndex + " size: " + this.paginator.pageSize + " length: " + this.paginator.length);
       // console.log("LOCAL: index: " + this.pageIndex + " size: " + this.pageSize + " length: " + this.length);
     });
@@ -71,13 +68,12 @@ export class AdminComponent implements AfterViewInit {
   }
 
   applySort(sortState: Sort){
+    console.log(sortState);
     this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, this.sort.active,this.sort.direction).subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.dataSource._updatePaginator(data.totalElements);
       this.pageIndex = data.number;
       this.paginator.pageIndex = data.number;
-
-      console.log(data);
 
       // console.log("PAGINATOR: index: " + this.paginator.pageIndex + " size: " + this.paginator.pageSize + " length: " + this.paginator.length);
       // console.log("LOCAL: index: " + this.pageIndex + " size: " + this.pageSize + " length: " + this.length);
