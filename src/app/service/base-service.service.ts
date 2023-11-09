@@ -26,7 +26,7 @@ export class BaseServiceService {
   }
 
   deleteStudent(student: Student): Observable<Student>{
-    return this.http.delete<Student>(this.adminUrl +"/"+ student.id).pipe();
+    return this.http.delete<Student>(this.adminUrl +"/"+ student.user_id).pipe();
   }
 
   editStudent(student: Student): Observable<Student>{

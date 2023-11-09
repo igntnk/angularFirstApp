@@ -1,6 +1,7 @@
+import { Student } from "../modules/students";
 
 export class PageResponse{
-  content: Array<any>;
+  content: Array<Student>;
   numberOfElements: number;
   totalElements: number;
 

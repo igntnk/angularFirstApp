@@ -71,7 +71,7 @@ export class MaterialTableComponent implements AfterViewInit {
   }
 
   editStudent(student: Student){
-    this.localStudent.id = student.id;
+    this.localStudent.user_id = student.user_id;
     this.localStudent.name = student.name;
     this.localStudent.surname = student.surname;
     const dialogEdiingStudent = this.dialog.open(DialogEditInfoComponent, {

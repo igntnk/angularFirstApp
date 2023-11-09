@@ -1,7 +1,7 @@
 import { SessionStorageService } from 'angular-web-storage';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ROLE } from './role';
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   public deleteUser(student:Student):Observable<any> {
-    return this.http.delete<Student>('api/admin/users/'+ student.id ).pipe();
+    return this.http.delete<Student>('api/admin/users/'+ student.user_id ).pipe();
   }
 
   public editUser(student:Student):Observable<any> {
@@ -119,9 +119,12 @@ export class AuthService {
       return this.http.post<Student>('api/admin/users',student).pipe();
   }
 
-  public getCurrentUsers(pageIndex: number, pageSize: number,filter: String):Observable<any>{
+  public getCurrentUsers(pageIndex: number, pageSize: number,filter: string,sortColumn:string,sortDirection:string):Observable<any>{
+    const params = new HttpParams().set("filterData", filter).
+                                    set("sortColumn", sortColumn).
+                                    set("sortDirection",sortDirection);
 
-    return this.http.get('api/admin/users/'+pageIndex +'/'+pageSize+'/'+filter).pipe();
+    return this.http.get('api/admin/users/'+pageIndex +'/'+pageSize, {params}).pipe();
 
   }
 

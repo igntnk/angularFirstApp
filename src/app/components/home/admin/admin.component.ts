@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BaseServiceService } from 'src/app/service/base-service.service';
 import { AfterViewInit, Component, ViewChild, NgModule } from '@angular/core';
 import {  MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
-import {  MatSort, MatSortModule} from '@angular/material/sort';
+import {  MatSort, MatSortModule, Sort} from '@angular/material/sort';
 import {  MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { DialogEditInfoComponent } from '../../student-editor/dialog-edit-info/dialog-edit-info.component';
 import { DialogEditWrapperComponent } from '../../student-editor/dialog-edit-wrapper/dialog-edit-wrapper.component';
@@ -21,7 +21,7 @@ import { PageResponse } from 'src/app/model/pageResponse';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'surname', 'action'];
+  displayedColumns: string[] = ['user_id', 'name', 'surname', 'action'];
   dataSource = new MatTableDataSource<Student>([]);
   localStudent: Student = new Student;
   user!: CredentialResponce;
@@ -30,7 +30,7 @@ export class AdminComponent implements AfterViewInit {
   pageSize:number = 5;
   length!: number;
   constLength: number;
-  filter: String = "";
+  filter: string = "";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -46,7 +46,8 @@ export class AdminComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, "$empty").subscribe((data:PageResponse) => {
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, this.sort.active,this.sort.direction).subscribe((data:PageResponse) => {
+      console.log(data);
       this.dataSource.data = data.content;
       this.length = data.totalElements;
     });
@@ -55,7 +56,22 @@ export class AdminComponent implements AfterViewInit {
   applyFilter(event: Event) {
     this.filter = (event.target as HTMLInputElement).value;
     if(this.filter.length == 0 ){this.filter = "$empty";}
-    this.authService.getCurrentUsers(this.paginator.pageIndex,this.paginator.pageSize,this.filter).subscribe((data:PageResponse) => {
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, this.sort.active,this.sort.direction).subscribe((data:PageResponse) => {
+      this.dataSource.data = data.content;
+      this.dataSource._updatePaginator(data.totalElements);
+      this.pageIndex = data.number;
+      this.paginator.pageIndex = data.number;
+
+      console.log(data);
+
+      // console.log("PAGINATOR: index: " + this.paginator.pageIndex + " size: " + this.paginator.pageSize + " length: " + this.paginator.length);
+      // console.log("LOCAL: index: " + this.pageIndex + " size: " + this.pageSize + " length: " + this.length);
+    });
+    return event;
+  }
+
+  applySort(sortState: Sort){
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, this.sort.active,this.sort.direction).subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.dataSource._updatePaginator(data.totalElements);
       this.pageIndex = data.number;
@@ -88,7 +104,7 @@ export class AdminComponent implements AfterViewInit {
   }
 
   editStudent(student: Student){
-    this.localStudent.id = student.id;
+    this.localStudent.user_id = student.user_id;
     this.localStudent.name = student.name;
     this.localStudent.surname = student.surname;
     const dialogEdiingStudent = this.dialog.open(DialogEditInfoComponent, {
@@ -118,7 +134,7 @@ export class AdminComponent implements AfterViewInit {
 
   public changeInfo(event:PageEvent){
     if(this.filter.length == 0 ){this.filter = "$empty";}
-    this.authService.getCurrentUsers(this.paginator.pageIndex,this.paginator.pageSize,this.filter).subscribe((data:PageResponse) => {
+    this.authService.getCurrentUsers(this.pageIndex,this.pageSize, this.filter, this.sort.active,this.sort.direction).subscribe((data:PageResponse) => {
       this.dataSource.data = data.content;
       this.dataSource._updatePaginator(data.totalElements);
       this.pageIndex = data.number;
